@@ -1,8 +1,8 @@
-import './globals.css';
+import "./globals.css";
 
 export const metadata = {
-  title: 'test',  // ここにページタイトルを指定
-  description: 'test page',  // ここにページの説明を指定
+  title: "test", // ここにページタイトルを指定
+  description: "test page", // ここにページの説明を指定
 };
 
 export default function RootLayout({
@@ -12,9 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
