@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function Main() {
   const [time, setTime] = useState(new Date());
-  const [showColon, setShowColon] = useState(1); // 初期値を 1 に設定
+  const [showColon, setShowColon] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -16,7 +16,7 @@ export default function Main() {
 
     // 点滅タイマーを設定
     const blinkTimer = setInterval(() => {
-      setShowColon((prev) => prev * -1); // 値を * -1 する
+      setShowColon((prev) => !prev); // 値を * -1 する
     }, 1000); // 点滅の間隔
 
     // クリーンアップ
@@ -31,12 +31,18 @@ export default function Main() {
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <p className="text-5xl Helvetica">
-        {hours}
-        {showColon === 1 ? ":" : " "}
-        {minutes}
-      </p>
+    <div className="flex items-center text-center justify-center text-5xl Helvetica h-screen">
+      <div className="w-16">{hours}</div>
+      <div className="w-1.5">
+        {showColon && (
+          <div>
+            <div className="h-1.5 w-1.5 bg-black rounded-full"></div>
+            <div className="h-2"></div>
+            <div className="h-1.5 w-1.5 bg-black rounded-full"></div>
+          </div>
+        )}
+      </div>
+      <div className="w-16">{minutes}</div>
     </div>
   );
 }
