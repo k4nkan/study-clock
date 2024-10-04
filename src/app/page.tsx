@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Main() {
   const [time, setTime] = useState(new Date());
   const [showColon, setShowColon] = useState(false);
   const [fontIndex, setFontIndex] = useState(0);
+  const [isMouseMoving, setIsMouseMoving] = useState(false);
+
+  const movementTimeout = useRef<number | null>(null); // useRefを使用してリファレンスを保持
+
   const font_data = [
     "Pacifico",
     "Cute Font",
@@ -25,33 +29,53 @@ export default function Main() {
       setTime(new Date());
     };
 
-    // タイマーを1秒ごとに実行
     const timer = setInterval(updateTime, 1000);
-
-    // 点滅タイマーを設定
     const blinkTimer = setInterval(() => {
-      setShowColon((prev) => !prev); // 値を * -1 する
-    }, 1000); // 点滅の間隔
+      setShowColon((prev) => !prev);
+    }, 1000);
 
-    // クリーンアップ
+    // マウスが動いた時の処理
+    const handleMouseMove = () => {
+      setIsMouseMoving(true);
+
+      // マウスが動いている間、タイマーをリセット
+      if (movementTimeout.current) {
+        clearTimeout(movementTimeout.current);
+      }
+
+      // 2秒間マウスが動かない場合、`isMouseMoving`をfalseに
+      movementTimeout.current = window.setTimeout(() => {
+        setIsMouseMoving(false);
+      }, 2000);
+    };
+
+    // マウスムーブのリスナーを追加
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // クリーンアップ処理
     return () => {
       clearInterval(timer);
       clearInterval(blinkTimer);
+      if (movementTimeout.current) {
+        clearTimeout(movementTimeout.current); // クリーンアップ
+      }
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
-  // 時間と分をフォーマット
   const hours = time.getHours().toString().padStart(2, "0");
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
   return (
-    <div onClick={handleClick} style={{ fontFamily: font_data[fontIndex] }}>
-      <div className="flex items-center text-center justify-center text-5xl h-screen">
+    <div className="relative" onClick={handleClick} style={{ fontFamily: font_data[fontIndex] }}>
+      <div className="absolute flex flex-col">{isMouseMoving && <div>test</div>}
+      <div className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen">
         <div className="w-16">{hours}</div>
-        <div className="w-2 flex justify-center items-center">
+        <div className="w-2 flex justify-center">
           {showColon && <div>:</div>}
         </div>
         <div className="w-16">{minutes}</div>
+      </div>
       </div>
     </div>
   );
