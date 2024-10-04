@@ -5,6 +5,20 @@ import { useEffect, useState } from "react";
 export default function Main() {
   const [time, setTime] = useState(new Date());
   const [showColon, setShowColon] = useState(false);
+  const [fontIndex, setFontIndex] = useState(0);
+  const font_data = [
+    "Pacifico",
+    "Cute Font",
+    "Dancing Script",
+    "Shadows Into Light",
+    "Caveat",
+  ];
+
+  const handleClick = () => {
+    setFontIndex((prevIndex) =>
+      prevIndex < font_data.length - 1 ? prevIndex + 1 : 0
+    );
+  };
 
   useEffect(() => {
     const updateTime = () => {
@@ -31,18 +45,14 @@ export default function Main() {
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
   return (
-    <div className="flex items-center text-center justify-center text-5xl Helvetica h-screen">
-      <div className="w-16">{hours}</div>
-      <div className="w-1.5">
-        {showColon && (
-          <div>
-            <div className="h-1.5 w-1.5 bg-black rounded-full"></div>
-            <div className="h-2"></div>
-            <div className="h-1.5 w-1.5 bg-black rounded-full"></div>
-          </div>
-        )}
+    <div onClick={handleClick} style={{ fontFamily: font_data[fontIndex] }}>
+      <div className="flex items-center text-center justify-center text-5xl h-screen">
+        <div className="w-16">{hours}</div>
+        <div className="w-2 flex justify-center items-center">
+          {showColon && <div>:</div>}
+        </div>
+        <div className="w-16">{minutes}</div>
       </div>
-      <div className="w-16">{minutes}</div>
     </div>
   );
 }

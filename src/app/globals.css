@@ -1,8 +1,11 @@
 /* globals.css */
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cute+Font&family=Dancing+Script:wght@400..700&family=Pacifico&family=Shadows+Into+Light&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family:  Helvetica, Arial, sans-serif;
+  font-family: "Pacifico", "Cute Font", "Dancing Script", "Shadows Into Light",
+    "Caveat";
 }
