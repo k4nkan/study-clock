@@ -8,7 +8,7 @@ export default function Main() {
   const [showColon, setShowColon] = useState(false);
   const [fontIndex, setFontIndex] = useState(0);
   const [isMouseMoving, setIsMouseMoving] = useState(false);
-  const [position, setPosition] = useState({x:0, y:0});
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const movementTimeout = useRef<number | null>(null); // useRefを使用してリファレンスを保持
 
@@ -48,8 +48,8 @@ export default function Main() {
       // 2秒間マウスが動かない場合、`isMouseMoving`をfalseに
       movementTimeout.current = window.setTimeout(() => {
         setIsMouseMoving(false);
-        const {x,y} = getRundomPosition();
-        setPosition({x, y})
+        const { x, y } = getRundomPosition();
+        setPosition({ x, y });
       }, 1000);
     };
 
@@ -67,9 +67,9 @@ export default function Main() {
     };
   }, []);
 
-  useEffect(() =>{
+  useEffect(() => {
     console.log(position);
-  },[position]);
+  }, [position]);
 
   const hours = time.getHours().toString().padStart(2, "0");
   const minutes = time.getMinutes().toString().padStart(2, "0");
@@ -82,9 +82,14 @@ export default function Main() {
     >
       <div className="absolute flex flex-col">
         {!isMouseMoving && (
-          <div style={{position: 'absolute', top: `${position.y}px`, left: `${position.x}px` }}>
-            <div>test</div>
-          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: `${position.y}px`,
+              left: `${position.x}px`,
+            }}
+            className="bg-teal-300 w-16 h-16 rounded-full opacity-50"
+          ></div>
         )}
         <div className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen">
           <div className="w-16">{hours}</div>
