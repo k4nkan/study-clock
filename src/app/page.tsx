@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { getRundomPosition } from "@/component/getRundomPosition";
+import { motion } from "framer-motion";
 
 export default function Main() {
   const [time, setTime] = useState(new Date());
@@ -91,12 +92,17 @@ export default function Main() {
             className="bg-teal-300 w-16 h-16 rounded-full opacity-50"
           ></div>
         )}
+
         <div className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen">
-          <div className="w-16">{hours}</div>
+          <motion.div className="w-16" whileHover={{ scale: 2, x: -25, y: -8 }}>
+            {hours}
+          </motion.div>
           <div className="w-2 flex justify-center">
             {showColon && <div>:</div>}
           </div>
-          <div className="w-16">{minutes}</div>
+          <motion.div className="w-16" whileHover={{ scale: 2, x: 25, y: -8 }}>
+            {minutes}
+          </motion.div>
         </div>
       </div>
     </div>
