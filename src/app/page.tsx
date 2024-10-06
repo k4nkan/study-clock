@@ -8,6 +8,7 @@ export default function Main() {
   const [time, setTime] = useState(new Date());
   const [showColon, setShowColon] = useState(false);
   const [fontIndex, setFontIndex] = useState(0);
+  const [colorIndex, setColorIndex] = useState(0);
   const [isMouseMoving, setIsMouseMoving] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -21,9 +22,17 @@ export default function Main() {
     "Caveat",
   ];
 
-  const handleClick = () => {
+  const color_data = ["black", "blue", "red", "cyan", "green"];
+
+  const handleFontClick = () => {
     setFontIndex((prevIndex) =>
       prevIndex < font_data.length - 1 ? prevIndex + 1 : 0
+    );
+  };
+
+  const handleColorClick = () => {
+    setColorIndex((prevIndex) =>
+      prevIndex < color_data.length - 1 ? prevIndex + 1 : 0
     );
   };
 
@@ -76,11 +85,7 @@ export default function Main() {
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
   return (
-    <div
-      className="relative"
-      onClick={handleClick}
-      style={{ fontFamily: font_data[fontIndex] }}
-    >
+    <div className="relative" style={{ fontFamily: font_data[fontIndex] }}>
       <div className="absolute flex flex-col">
         {!isMouseMoving && (
           <div
@@ -93,14 +98,18 @@ export default function Main() {
           ></div>
         )}
 
-        <div className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen">
-          <motion.div className="w-16" whileHover={{ scale: 2, x: -25, y: -8 }}>
+        <div className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen" style={{color: color_data[colorIndex]}}>
+          <motion.div onClick={handleColorClick} className="w-16" whileHover={{ scale: 2, x: -25, y: -8 }}>
             {hours}
           </motion.div>
           <div className="w-2 flex justify-center">
             {showColon && <div>:</div>}
           </div>
-          <motion.div className="w-16" whileHover={{ scale: 2, x: 25, y: -8 }}>
+          <motion.div
+            onClick={handleFontClick}
+            className="w-16"
+            whileHover={{ scale: 2, x: 25, y: -8 }}
+          >
             {minutes}
           </motion.div>
         </div>
