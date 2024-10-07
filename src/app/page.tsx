@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { getRundomPosition } from "@/component/getRundomPosition";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Main() {
   const [time, setTime] = useState(new Date());
@@ -16,7 +16,7 @@ export default function Main() {
   const [isMouseMoving, setIsMouseMoving] = useState(false);
 
   // 配置するボールの座標を保存する配列
-  const [position, setPosition] = useState([{ x: -100, y: -100 }]);
+  const [position, setPosition] = useState([{ x: -1000, y: -1000 }]);
 
   const movementTimeout = useRef<number | null>(null); // useRefを使用してリファレンスを保持
 
@@ -49,7 +49,7 @@ export default function Main() {
       setPosition((prevPositions) => [...prevPositions, newPosition]);
     };
 
-    const balltimer = setInterval(addNewBall, 2000);
+    const balltimer = setInterval(addNewBall, 5000);
 
     const updateTime = () => {
       setTime(new Date());
@@ -64,17 +64,18 @@ export default function Main() {
     // マウスが動いた時の処理
     const handleMouseMove = () => {
       setIsMouseMoving(true);
-      setPosition([{ x: -100, y: -100 }]);
 
       // マウスが動いている間、タイマーをリセット
       if (movementTimeout.current) {
         clearTimeout(movementTimeout.current);
       }
 
-      // 2秒間マウスが動かない場合、`isMouseMoving`をfalseに
+      // 5秒間マウスが動かない場合、`isMouseMoving`をfalseに
       movementTimeout.current = window.setTimeout(() => {
         setIsMouseMoving(false);
-      }, 1000);
+      }, 5000);
+
+      setPosition([{ x: -1000, y: -1000 }]);
     };
 
     // マウスムーブのリスナーを追加
@@ -102,20 +103,24 @@ export default function Main() {
   return (
     <div className="relative" style={{ fontFamily: font_data[fontIndex] }}>
       <div className="absolute flex flex-col">
-        {!isMouseMoving &&
-          position.map((position, index) => (
-            <motion.div
-              style={{
-                position: "absolute",
-                top: `${position.y}px`,
-                left: `${position.x}px`,
-              }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.2, scale: 4 }}
-              transition={{ duration: 2 }}
-              className="bg-teal-300 w-16 h-16 rounded-full opacity-50"
-            ></motion.div>
-          ))}
+        <AnimatePresence>
+          {!isMouseMoving &&
+            position.map((position, index) => (
+              <motion.div
+                key={index}
+                style={{
+                  position: "absolute",
+                  top: `${position.y}px`,
+                  left: `${position.x}px`,
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.2, scale: 4 }}
+                exit={{ opacity: 0, scale: 8 }}
+                transition={{ duration: 2 }}
+                className="bg-teal-300 w-16 h-16 rounded-full opacity-50"
+              ></motion.div>
+            ))}
+        </AnimatePresence>
 
         <div
           className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen"
