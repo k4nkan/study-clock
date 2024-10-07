@@ -16,7 +16,7 @@ export default function Main() {
 
   const font_data = [
     "Pacifico",
-    "Cute Font",
+    "Protest Strike",
     "Dancing Script",
     "Shadows Into Light",
     "Caveat",
@@ -88,18 +88,28 @@ export default function Main() {
     <div className="relative" style={{ fontFamily: font_data[fontIndex] }}>
       <div className="absolute flex flex-col">
         {!isMouseMoving && (
-          <div
+          <motion.div
             style={{
               position: "absolute",
               top: `${position.y}px`,
               left: `${position.x}px`,
             }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5, scale: 2 }}
+            transition={{ duration: 2 }}
             className="bg-teal-300 w-16 h-16 rounded-full opacity-50"
-          ></div>
+          ></motion.div>
         )}
 
-        <div className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen" style={{color: color_data[colorIndex]}}>
-          <motion.div onClick={handleColorClick} className="w-16" whileHover={{ scale: 2, x: -25, y: -8 }}>
+        <div
+          className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen"
+          style={{ color: color_data[colorIndex] }}
+        >
+          <motion.div
+            onClick={handleColorClick}
+            className="w-20"
+            whileHover={{ scale: 1.5, x: -8, y: -3 }}
+          >
             {hours}
           </motion.div>
           <div className="w-2 flex justify-center">
@@ -108,7 +118,7 @@ export default function Main() {
           <motion.div
             onClick={handleFontClick}
             className="w-16"
-            whileHover={{ scale: 2, x: 25, y: -8 }}
+            whileHover={{ scale: 1.5, x: 8, y: -3 }}
           >
             {minutes}
           </motion.div>
