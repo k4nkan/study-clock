@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { getRundomPosition } from "@/component/getRundomPosition";
+import { getRundomPosition } from "@/components/getRundomPosition";
 import { AnimatePresence, motion } from "framer-motion";
+import SideMenu from "@/components/sideMenu";
 
 export default function Main() {
   const [time, setTime] = useState(new Date());
@@ -103,6 +104,7 @@ export default function Main() {
   return (
     <div className="relative" style={{ fontFamily: font_data[fontIndex] }}>
       <div className="absolute flex flex-col">
+        <SideMenu />
         <AnimatePresence>
           {!isMouseMoving &&
             position.map((position, index) => (
@@ -128,7 +130,7 @@ export default function Main() {
         >
           <motion.div
             onClick={handleColorClick}
-            className="w-16"
+            className="w-16 cursor-pointer"
             whileHover={{ scale: 1.5, x: -8, y: -3 }}
           >
             {hours}
@@ -138,7 +140,7 @@ export default function Main() {
           </div>
           <motion.div
             onClick={handleFontClick}
-            className="w-16"
+            className="w-16 cursor-pointer"
             whileHover={{ scale: 1.5, x: 8, y: -3 }}
           >
             {minutes}
