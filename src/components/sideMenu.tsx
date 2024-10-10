@@ -11,11 +11,14 @@ const SideMenu: React.FC = () => {
   };
 
   return (
-    <div
-      onClick={handleMenuToggle}
-      className="w-16 h-10 z-50 text-center content-center cursor-pointer"
-    >
-      {isMenuOpen ? <div>open</div> : <div>menu</div>}
+    <div className="w-16 h-10 z-50 text-center content-center cursor-pointer">
+      {isMenuOpen ? (
+        <div>
+          <div onClick={handleMenuToggle}>close</div>
+        </div>
+      ) : (
+        <div onClick={handleMenuToggle}>menu</div>
+      )}
     </div>
   );
 };
