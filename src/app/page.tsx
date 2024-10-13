@@ -116,7 +116,7 @@ export default function Main() {
                   left: `${position.x}px`,
                 }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.2, scale: 4}}
+                animate={{ opacity: 0.2, scale: 4 }}
                 exit={{ opacity: 0, scale: 8 }}
                 transition={{ duration: 2 }}
                 className="bg-teal-300 w-16 h-16 rounded-full opacity-50"
