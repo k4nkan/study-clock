@@ -32,9 +32,11 @@ const SideMenu: React.FC = () => {
       {!isMenuOpen && (
         <div onClick={handleMenuToggle}>
           <motion.div
-            initial={{ scale: 1, opacity: 0 }}
+            initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.5 }}
             style={{ transformOrigin: "left" }}
+            className="cursor-pointer"
           >
             <IoMdMenu size={"2rem"} />
           </motion.div>
