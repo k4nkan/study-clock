@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "test", // ここにページタイトルを指定
-  description: "test page", // ここにページの説明を指定
+  title: "study clock",
+  description: "",
 };
 
 export default function RootLayout({
@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body>{children}</body>
     </html>
   );

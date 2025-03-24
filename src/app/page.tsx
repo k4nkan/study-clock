@@ -3,15 +3,10 @@
 import { useEffect, useState, useRef } from "react";
 import { getRundomPosition } from "@/components/getRundomPosition";
 import { AnimatePresence, motion } from "framer-motion";
-import SideMenu from "@/components/sideMenu";
 
 export default function Main() {
   const [time, setTime] = useState(new Date());
   const [showColon, setShowColon] = useState(false);
-
-  // 対応する番号の色やフォントに変更するための関数
-  const [fontIndex, setFontIndex] = useState(0);
-  const [colorIndex, setColorIndex] = useState(0);
 
   // マウスが止まっていればtrueとする関数
   const [isMouseMoving, setIsMouseMoving] = useState(false);
@@ -20,28 +15,6 @@ export default function Main() {
   const [position, setPosition] = useState([{ x: -1000, y: -1000 }]);
 
   const movementTimeout = useRef<number | null>(null); // useRefを使用してリファレンスを保持
-
-  const font_data = [
-    "Pacifico",
-    "Protest Strike",
-    "Dancing Script",
-    "Shadows Into Light",
-    "Caveat",
-  ];
-
-  const color_data = ["black", "blue", "red", "cyan", "green"];
-
-  const handleFontClick = () => {
-    setFontIndex((prevIndex) =>
-      prevIndex < font_data.length - 1 ? prevIndex + 1 : 0
-    );
-  };
-
-  const handleColorClick = () => {
-    setColorIndex((prevIndex) =>
-      prevIndex < color_data.length - 1 ? prevIndex + 1 : 0
-    );
-  };
 
   // 乱数を生成、配列に追加する関数
   useEffect(() => {
@@ -102,9 +75,8 @@ export default function Main() {
   const minutes = time.getMinutes().toString().padStart(2, "0");
 
   return (
-    <div className="relative" style={{ fontFamily: font_data[fontIndex] }}>
+    <div className="relative">
       <div className="absolute flex flex-col">
-        <SideMenu />
         <AnimatePresence>
           {!isMouseMoving &&
             position.map((position, index) => (
@@ -124,25 +96,17 @@ export default function Main() {
             ))}
         </AnimatePresence>
 
-        <div
-          className="absolute flex items-center text-center justify-center text-5xl h-screen w-screen"
-          style={{ color: color_data[colorIndex] }}
-        >
+        <div className="absolute flex items-center text-center justify-center text-8xl h-screen w-screen">
           <motion.div
-            onClick={handleColorClick}
-            className="w-16 cursor-pointer"
-            whileHover={{ scale: 1.5, x: -8, y: -3 }}
+            className="w-32"
+            whileHover={{ scale: 1.2, x: -8, y: -3 }}
           >
             {hours}
           </motion.div>
           <div className="w-2 flex justify-center">
             {showColon && <div>:</div>}
           </div>
-          <motion.div
-            onClick={handleFontClick}
-            className="w-16 cursor-pointer"
-            whileHover={{ scale: 1.5, x: 8, y: -3 }}
-          >
+          <motion.div className="w-32" whileHover={{ scale: 1.2, x: 8, y: -3 }}>
             {minutes}
           </motion.div>
         </div>
